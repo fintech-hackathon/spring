@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="usermapper">
+	
+	<select id="login" resultType="com.singsong.singsong.dto.user.User">
+		SELECT * 
+		FROM User 
+		WHERE u_id = #{u_id} and u_pw = #{u_pw}
+	</select>
+	
+	<select id="getuserinfo" resultType="com.singsong.singsong.dto.user.User">
+		SELECT * 
+		FROM User 
+		WHERE u_id = #{id}
+	</select>
+
+	<select id="join" parameterType ="com.singsong.singsong.dto.user.User">
+		INSERT INTO User(u_id,u_pw,u_name) 
+		VALUES (#{u_id},#{u_pw},#{u_name})
+	</select>
+
+	
+
+	
+
+
+
+</mapper>

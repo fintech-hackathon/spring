@@ -44,7 +44,7 @@ public class CooconController {
 
 	@PostMapping("/coocon/checkAccount")
 	public ResponseEntity<Object> checkAccountApi(@RequestBody String json) throws UnsupportedEncodingException,ParseException{
-		
+		System.out.println("111111111111");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 
 		HashMap<String,String> hm = checkAccount(ob.get("u_id").toString());

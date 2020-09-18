@@ -100,6 +100,7 @@ public class UserController {
 		User result = userservice.login(user);
 
 		if (result != null) {
+			System.out.println("success");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("fail", HttpStatus.OK);
@@ -179,7 +180,7 @@ public class UserController {
 		final String CUST_ID = ob.get("CUST_ID").toString();//사용자 ID
 		final String OWNER_ID = ob.get("OWNER_ID").toString();//노래방 주인 ID
 		final String TRAN_AMT = ob.get("TRAN_AMT").toString();//결제 금액
-		final String ROOM_NUM = ob.get("ROOM_NUM").toString();//방번호
+		// final String ROOM_NUM = ob.get("ROOM_NUM").toString();//방번호
 		
 		// 고객 출금
 		User user = userservice.getUser(CUST_ID);

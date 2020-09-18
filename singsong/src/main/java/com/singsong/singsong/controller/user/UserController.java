@@ -269,6 +269,7 @@ public class UserController {
 		user.setU_id(ob.get("u_id").toString());
 		user.setU_bank(ob.get("u_bank").toString());
 		user.setU_account(ob.get("u_account").toString());
+		user.setU_account(ob.get("u_name").toString());
 
 		int result = userservice.updateAccount(user);
 		System.out.println(user);

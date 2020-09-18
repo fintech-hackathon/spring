@@ -22,7 +22,8 @@
 	<update id="updateAccount" parameterType="com.singsong.singsong.dto.user.User">
 		update User
 		SET u_bank = #{u_bank},
-		u_account = #{u_account}
+		u_account = #{u_account},
+		u_name = #{u_name}
 		where u_id = #{u_id}
 	</update>
 

@@ -8,15 +8,16 @@
 
 ## 1. 사용자 API
 
-| Members                   | Descriptions     |
-| :------------------------ | ---------------- |
-| POST /user/join           | 회원가입         |
-| POST /user/login          | 회원 로그인      |
-| POST /user/getinfo        | 회원정보         |
-| POST /user/charge         | 회원 포인트 충전 |
-| POST /coocon/checkAccount | 회원 계좌 확인   |
-| POST /user/payment        | 회원 노래방 결제 |
-| POST /transinfo/getList   | 회원 거래 내역   |
+| Members                   | Descriptions         |
+| :------------------------ | -------------------- |
+| POST /user/join           | 회원가입             |
+| POST /user/login          | 회원 로그인          |
+| POST /user/getinfo        | 회원정보             |
+| POST /user/charge         | 회원 포인트 충전     |
+| POST /coocon/checkAccount | 회원 계좌 확인       |
+| POST /user/payment        | 회원 노래방 결제     |
+| POST /transinfo/getList   | 회원 거래 내역       |
+| POST /user/updateAccount  | 회원 계좌 등록(수정) |
 
 ### 	1.1 회원 가입
 
@@ -26,7 +27,6 @@
 | -------- | ------ | ------------- |
 | u_id     | String | 회원 아이디   |
 | u_pw     | String | 회원 비밀번호 |
-| u_name   | String | 회원 이름     |
 
 
 `Response (success)`
@@ -193,7 +193,34 @@
 | ------ | ------ | -------------- |
 | result | String | 조회 실패(fail) |
 
+### 	1.8 회원 계좌 등록(수정)
 
+`Request parameters`
+
+| Field     | Type   | Description |
+| --------- | ------ | ----------- |
+| u_id      | String | 회원 아이디 |
+| u_name    | String | 회원 이름   |
+| u_bank    | String | 은행        |
+| u_account | String | 계좌        |
+
+
+`Response (success)`
+
+| Field  | Type   | Description    |
+| ------ | ------ | -------------- |
+| result | String | 등록 성공(success) |
+
+`Response (fail)`
+
+| Field  | Type   | Description    |
+| ------ | ------ | -------------- |
+| result | String | 등록 실패(fail) |
+
+
+
+
+/user/updateAccount
 
 
 ## 2. 사장 API
@@ -249,4 +276,57 @@
 | Field  | Type   | Description    |
 | ------ | ------ | -------------- |
 | result | String | 조회 실패(fai) |
+
+
+
+## 3.녹화파일 api
+
+
+
+
+| Members                   | Descriptions     |
+| :------------------------ | ---------------- |
+| POST /record/getList           | 녹화파일 리스트 |
+
+
+### 2.2 녹화파일 리스트
+
+`Response (success)`
+
+| Field   | Type    | Description           |
+| ------- | ------- | --------------------- |
+| rid     | Integer | DB에서 관리하는 id    |
+| r_u_id  | String  | 사용자 아이디         |
+| r_url   | String  | 녹화파일 경로         |
+| r_likes | Integer | 녹화파일 좋아요       |
+| r_users | String  | 녹화파일 좋아요한사람 |
+| r_date  | String  | 녹화파일  업로드 일   |
+
+`Response (fail)`	
+
+| Field  | Type   | Description |
+| ------ | ------ | ----------- |
+| result | String | X           |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

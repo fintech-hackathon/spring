@@ -8,9 +8,11 @@ import com.singsong.singsong.controller.concon.CooconController;
 import com.singsong.singsong.dto.Owner.Owner;
 import com.singsong.singsong.dto.Transinfo.Transinfo;
 import com.singsong.singsong.dto.profit.Profit;
+import com.singsong.singsong.dto.room.Room;
 import com.singsong.singsong.dto.user.User;
 import com.singsong.singsong.service.owner.ownerService;
 import com.singsong.singsong.service.profit.profitService;
+import com.singsong.singsong.service.room.RoomService;
 import com.singsong.singsong.service.transinfo.transinfoService;
 import com.singsong.singsong.service.user.userService;
 import com.singsong.singsong.util.URLparser;
@@ -38,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	profitService profitservice;
+
+	@Autowired
+	RoomService roomservice;
 
 
 	
@@ -100,7 +105,6 @@ public class UserController {
 		User result = userservice.login(user);
 
 		if (result != null) {
-			System.out.println("success");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>("fail", HttpStatus.OK);
@@ -180,7 +184,7 @@ public class UserController {
 		final String CUST_ID = ob.get("CUST_ID").toString();//사용자 ID
 		final String OWNER_ID = ob.get("OWNER_ID").toString();//노래방 주인 ID
 		final String TRAN_AMT = ob.get("TRAN_AMT").toString();//결제 금액
-		// final String ROOM_NUM = ob.get("ROOM_NUM").toString();//방번호
+		final String ROOM_NUM = ob.get("ROOM_NUM").toString();//방번호
 		
 		// 고객 출금
 		User user = userservice.getUser(CUST_ID);
@@ -237,8 +241,17 @@ public class UserController {
 				profit.setP_price(Integer.parseInt(TRAN_AMT));
 				profit.setP_type("0");
 				profit.setP_date(dateee);
-				System.out.println(profit);
+				// System.out.println(profit);
 				profitservice.writeProfit(profit);
+
+
+				Room room = new Room();
+				room.setSr_u_id(user.getUid());
+				room.setSr_o_id(owner.getOid());
+				room.setSr_song(Integer.parseInt(TRAN_AMT)/1000 * owner.getO_songByMoney());
+				room.setSr_date(dateee);
+				roomservice.writeroomDeatil(room);
+				
 				
 
 				return new ResponseEntity<>("success", HttpStatus.OK);

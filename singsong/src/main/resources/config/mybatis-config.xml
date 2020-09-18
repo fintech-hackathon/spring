@@ -7,7 +7,8 @@
 		<mapper resource="mappers/transinfo/transinfoMapper.xml" />
 		<mapper resource="mappers/owner/ownerMapper.xml" />
 		<mapper resource="mappers/profit/profitMapper.xml" />
+		<mapper resource="mappers/room/roomMapper.xml" />
+		<mapper resource="mappers/record/recordMapper.xml" />
 
-		
 	</mappers>
 </configuration>

@@ -6,4 +6,5 @@ public interface userService {
     User getUser(String id);
     int joinUser(User user);
     User login(User user);
+    int updateAccount(User user);
 }

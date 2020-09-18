@@ -244,7 +244,7 @@ public class UserController {
 				// System.out.println(profit);
 				profitservice.writeProfit(profit);
 
-
+				//방 사용
 				Room room = new Room();
 				room.setSr_u_id(user.getUid());
 				room.setSr_o_id(owner.getOid());
@@ -252,8 +252,6 @@ public class UserController {
 				room.setSr_date(dateee);
 				roomservice.writeroomDeatil(room);
 				
-				
-
 				return new ResponseEntity<>("success", HttpStatus.OK);
 			}
 			else{
@@ -264,6 +262,35 @@ public class UserController {
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 	}
+
+	@PostMapping("/user/updateAccount")
+	public ResponseEntity<Object> updateAccount(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
+		org.json.simple.JSONObject ob = parser.parseurl(json);
+		User user = new User();
+		user.setU_id(ob.get("u_id").toString());
+		user.setU_bank(ob.get("u_bank").toString());
+		user.setU_account(ob.get("u_account").toString());
+
+		int result = userservice.updateAccount(user);
+		System.out.println(user);
+		if(result > 0){
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		else{
+			return new ResponseEntity<>("fail", HttpStatus.OK);
+		}
+
+		
+	}
+
+
+
+
+
+
+
+
+
 
 	public String getseq(){
 		Date date = new Date();

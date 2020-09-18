@@ -28,5 +28,10 @@ public class userDaoImpl implements userDao {
     public User login(User user) {
         return sqlsession.selectOne("usermapper.login",user);
     }
+
+    @Override
+    public int updateAccount(User user) {
+        return sqlsession.update("usermapper.updateAccount",user);
+    }
     
 }

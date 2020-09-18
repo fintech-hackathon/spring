@@ -6,4 +6,5 @@ public interface userDao {
     int joinUser(User user);
     User getUser(String id);
     User login(User user);
+    int updateAccount(User user);
 }

@@ -15,13 +15,13 @@
 	</select>
 
 	<select id="join" parameterType ="com.singsong.singsong.dto.user.User">
-		INSERT INTO User(u_id,u_pw,u_name) 
-		VALUES (#{u_id},#{u_pw},#{u_name})
+		INSERT INTO User(u_id,u_pw) 
+		VALUES (#{u_id},#{u_pw})
 	</select>
 
 	<update id="updateAccount" parameterType="com.singsong.singsong.dto.user.User">
 		update User
-		set u_bank = #{u_bank},
+		SET u_bank = #{u_bank},
 		u_account = #{u_account}
 		where u_id = #{u_id}
 	</update>

@@ -56,7 +56,6 @@ public class UserController {
 		User user = new User();
 		user.setU_id(ob.get("u_id").toString());
 		user.setU_pw(ob.get("u_pw").toString());
-		user.setU_name(ob.get("u_name").toString());
 
 		if(userservice.getUser(ob.get("u_id").toString()) == null ){
 			int result = userservice.joinUser(user);

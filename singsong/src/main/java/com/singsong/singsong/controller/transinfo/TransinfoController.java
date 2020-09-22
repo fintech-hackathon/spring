@@ -23,12 +23,14 @@ public class TransinfoController {
 
     @PostMapping("/transinfo/getList")
     public ResponseEntity<Object> allowner(@RequestBody String json) throws UnsupportedEncodingException,ParseException{
-        
+        System.out.println("url : http://115.85.180.70:3001/transinfo/getList");
         org.json.simple.JSONObject ob = parser.parseurl(json);
-        String id = ob.get("CUST_ID").toString();
+        System.out.println("param : " +ob.toString());
+        String id = ob.get("u_id").toString();
 
 
-
+        System.out.println("result : success");
+        System.out.println("==============================");
         return new ResponseEntity<>(transinfoservice.getList(id), HttpStatus.OK);
 
     }

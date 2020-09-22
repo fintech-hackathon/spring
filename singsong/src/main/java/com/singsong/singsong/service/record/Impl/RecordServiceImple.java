@@ -20,5 +20,15 @@ public class RecordServiceImple implements RecordService {
     public List<Record> getRecordList() {
         return recorddao.getRecordList();
     }
+
+	@Override
+	public int upLikes(String url) {
+		return recorddao.upLikes(url);
+	}
+
+	@Override
+	public int upHites(String url) {
+		return recorddao.upHites(url);
+	}
     
 }

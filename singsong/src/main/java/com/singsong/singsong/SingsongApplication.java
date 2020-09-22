@@ -8,6 +8,7 @@ public class SingsongApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SingsongApplication.class, args);
+		System.out.println("==============================");
 	}
 
 }

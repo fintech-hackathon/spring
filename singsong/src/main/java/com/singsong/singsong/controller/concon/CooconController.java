@@ -44,7 +44,6 @@ public class CooconController {
 
 	@PostMapping("/coocon/checkAccount")
 	public ResponseEntity<Object> checkAccountApi(@RequestBody String json) throws UnsupportedEncodingException,ParseException{
-		System.out.println("111111111111");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 
 		HashMap<String,String> hm = checkAccount(ob.get("u_id").toString());
@@ -65,7 +64,7 @@ public class CooconController {
 
 
     public HashMap<String,String> checkAccount(String id){
-
+		System.out.println("function : checkAccount");
         String url = "https://dev.checkpay.co.kr/HKT_API_101.jct?";
 
 		HttpURLConnection con = null; //java.net.HttpURLConnection; BufferedWriter
@@ -87,7 +86,7 @@ public class CooconController {
                 url+=key+"=";
                 url+=param.getString(key)+"&";
 			}
-
+			System.out.println("request : "+param.toString());
 			//연결설정
 			URL req = new URL(url); //java.net.URL;
             con = (HttpURLConnection)req.openConnection();
@@ -121,7 +120,7 @@ public class CooconController {
 			}
 			bout.flush();
 			respData = new String(bout.toByteArray()); //응답데이터
-
+			System.out.println("response :"+respData);
 
 			
 			}
@@ -144,13 +143,10 @@ public class CooconController {
 				// 결과 파싱
 				JSONParser parser = new JSONParser();
 				org.json.simple.JSONObject json = (org.json.simple.JSONObject)parser.parse(respData);
-				System.out.println(json.get("REPY_CD"));
-				System.out.println(json.get("BAL_AMT"));
 
 				hm.put("REPY_CD", json.get("REPY_CD").toString());
 				hm.put("BAL_AMT", json.get("BAL_AMT").toString());
 
-				System.out.println(json.toString());
 			}
 			catch(Exception e){
 				System.out.println(e.getMessage());
@@ -165,7 +161,7 @@ public class CooconController {
 
 	//고객기준 돈 ++
     public String receiveMoney(String json) throws UnsupportedEncodingException,ParseException{
-
+		System.out.println("function : receiveMoney");
 		String url = "https://dev.checkpay.co.kr/HKT_API_201.jct?";
 
 		HttpURLConnection con = null; //java.net.HttpURLConnection; BufferedWriter
@@ -202,7 +198,7 @@ public class CooconController {
                 url+=key+"=";
                 url+=param.getString(key)+"&";
 			}
-
+			System.out.println("request : "+param);
 			//연결설정
 			URL req = new URL(url); //java.net.URL;
             con = (HttpURLConnection)req.openConnection();
@@ -236,7 +232,7 @@ public class CooconController {
 			}
 			bout.flush();
 			respData = new String(bout.toByteArray()); //응답데이터
-
+			System.out.println("response : "+respData);
 			}
 			catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -274,7 +270,7 @@ public class CooconController {
 	//고객기준 돈 -- 
     public String sendmoney(String json) throws UnsupportedEncodingException,ParseException{
 
-		
+		System.out.println("function : sendMoney");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 		String CUST_ID = ob.get("CUST_ID").toString();
 		String TRAN_SEQ = ob.get("TRAN_SEQ").toString();
@@ -303,7 +299,7 @@ public class CooconController {
 			param.put("ACCT_NO", ACCT_NO); // 계좌번호
 			param.put("TRAN_AMT", TRAN_AMT); // 거래구분
 
-            
+			System.out.println("request : "+param);
             for(String key : param.keySet()){
                 url+=key+"=";
                 url+=param.getString(key)+"&";
@@ -342,7 +338,7 @@ public class CooconController {
 			}
 			bout.flush();
 			respData = new String(bout.toByteArray()); //응답데이터
-
+			System.out.println("response : "+respData);
 			}
 			catch (MalformedURLException e) {
 			e.printStackTrace();

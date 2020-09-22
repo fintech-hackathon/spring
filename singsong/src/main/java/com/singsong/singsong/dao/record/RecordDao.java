@@ -7,5 +7,7 @@ import com.singsong.singsong.dto.record.Record;
 public interface RecordDao {
     
     List<Record> getRecordList();
+    int upLikes(String url);
+    int upHites(String url);
 
 }

@@ -17,4 +17,5 @@ public class Owner {
     String o_lon;
     int o_songByMoney;
     String o_singingroomname;
+    int o_roomnum;
 }

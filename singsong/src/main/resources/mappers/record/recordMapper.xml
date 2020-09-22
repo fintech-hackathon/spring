@@ -6,6 +6,20 @@
         select * from Record
     </select>
 
+    <update id="uplikes" parameterType="string">
+        update Record 
+        set r_likes = r_likes + 1
+        where r_url = #{url}
+    </update>
+
+    <update id="uphites" parameterType="string">
+        update Record 
+        set r_views = r_views + 1
+        where r_url = #{url}
+    </update>
+
+    
+
     
     
 

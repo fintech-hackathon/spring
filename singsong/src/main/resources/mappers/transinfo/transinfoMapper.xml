@@ -9,7 +9,7 @@
     </insert>
 
     <select id="getList" resultType="com.singsong.singsong.dto.Transinfo.Transinfo">
-        select * from TransInfo where t_u_id = #{id}
+        select * from TransInfo where t_u_id = #{id} order by t_date desc 
     </select>
 
 	

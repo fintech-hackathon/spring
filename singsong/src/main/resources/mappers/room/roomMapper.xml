@@ -4,7 +4,19 @@
 	
 	
     <insert id="writedetail" parameterType="com.singsong.singsong.dto.room.Room">
-        insert into SringroomDetail(sr_o_id,sr_u_id,sr_song,sr_date) values(#{sr_o_id},#{sr_u_id},#{sr_song},#{sr_date})
+        insert into SringroomDetail(sr_o_id,sr_u_id,sr_song,sr_date,sr_room) values(#{sr_o_id},#{sr_u_id},#{sr_song},#{sr_date},#{sr_room})
     </insert>
+
+    <select id="getList" resultType="com.singsong.singsong.dto.room.Room">
+        select * from SringroomDetail where sr_o_id = #{sr_o_id}
+    </select>
+
+    <select id="getListByUser" resultType="com.singsong.singsong.dto.room.Room">
+        select * from SringroomDetail where sr_u_id = #{sr_u_id}
+    </select>
+
+    <delete id="roomdelete">
+        delete from SringroomDetail where sr_u_id = #{sr_u_id}
+    </delete>
 
 </mapper>

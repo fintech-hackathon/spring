@@ -21,6 +21,16 @@ public class RecordDaoImpl implements RecordDao {
         return sqlsession.selectList("recordmapper.getlist");
     }
 
+    @Override
+    public int upLikes(String url) {
+        return sqlsession.update("recordmapper.uplikes",url);
+    }
+
+    @Override
+    public int upHites(String url) {
+        return sqlsession.update("recordmapper.uphites",url);
+    }
+
 
     
 }

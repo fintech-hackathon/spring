@@ -51,11 +51,13 @@ public class UserController {
 
 	@PostMapping("/user/join")
 	public ResponseEntity<Object> userjoin(@RequestBody String json) throws UnsupportedEncodingException,ParseException{
-
+		
+		System.out.println("url : http://115.85.180.70:3001/user/join");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 		User user = new User();
 		user.setU_id(ob.get("u_id").toString());
 		user.setU_pw(ob.get("u_pw").toString());
+		System.out.println("param : " +user);
 
 		if(userservice.getUser(ob.get("u_id").toString()) == null ){
 			int result = userservice.joinUser(user);
@@ -81,8 +83,13 @@ public class UserController {
 
 
 			if (result == 1) {
+				System.out.println(user);
+				System.out.println("result : success");
+				System.out.println("==============================");
 				return new ResponseEntity<>("success", HttpStatus.OK);
 			} else {
+				System.out.println("result : fail");
+				System.out.println("==============================");
 				return new ResponseEntity<>("fail", HttpStatus.OK);
 			}
 		}
@@ -95,46 +102,56 @@ public class UserController {
 	@PostMapping("/user/login")
 	public ResponseEntity<Object> login(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
 
-		
+		System.out.println("url : http://115.85.180.70:3001/user/login");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 		
 		User user = new User();
 		user.setU_id(ob.get("u_id").toString());
 		user.setU_pw(ob.get("u_pw").toString());
 		User result = userservice.login(user);
+		System.out.println("param : "+user);
 
 		if (result != null) {
+			System.out.println("result : success");
+			System.out.println("==============================");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
+			System.out.println("fail : fail");
+			System.out.println("==============================");
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/user/getinfo")
 	public ResponseEntity<Object> checkAccountApi(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
-		
+		System.out.println("url : http://115.85.180.70:3001/user/getinfo");
 		org.json.simple.JSONObject ob = parser.parseurl(json);;
 
 		String id = "";
-		id = ob.get("id").toString();
-		
+		id = ob.get("u_id").toString();
+		System.out.println("param : " +id);
 		User user = userservice.getUser(id);
+		
 		if(user != null){
+			System.out.println("result : " +user);
+			System.out.println("==============================");
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 		else{
+			System.out.println("result : fail");
+			System.out.println("==============================");
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/user/charge")
 	public ResponseEntity<Object> chargeMoney(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
-		
+		System.out.println("url : http://115.85.180.70:3001/user/charge");
+
 		org.json.simple.JSONObject ob = parser.parseurl(json);;
-		System.out.println(ob.toString());
 		String CUST_ID = ob.get("CUST_ID").toString();
 		String TRAN_AMT = ob.get("TRAN_AMT").toString();
-
+		System.out.println("param : " +ob.toString());
 
 		User user = userservice.getUser(CUST_ID);
 
@@ -168,26 +185,31 @@ public class UserController {
 			ti.setT_date(dateee);
 
 			transinfoservice.writeinfo(ti);
-
+			System.out.println("result : success");
+			System.out.println("==============================");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else{
+			System.out.println("result : fail");
+			System.out.println("==============================");
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/user/payment")
 	public ResponseEntity<Object> payment(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
-		
+		System.out.println("url : http://115.85.180.70:3001/user/payment");
 		org.json.simple.JSONObject ob = parser.parseurl(json);
 		final String CUST_ID = ob.get("CUST_ID").toString();//사용자 ID
 		final String OWNER_ID = ob.get("OWNER_ID").toString();//노래방 주인 ID
 		final String TRAN_AMT = ob.get("TRAN_AMT").toString();//결제 금액
 		final String ROOM_NUM = ob.get("ROOM_NUM").toString();//방번호
+
+		final String TYPE = ob.get("TYPE").toString();
+		System.out.println("param : " +ob);
 		
 		// 고객 출금
 		User user = userservice.getUser(CUST_ID);
-		System.out.println(user);
 
 		JSONObject obj = new JSONObject();
 		obj.put("CUST_ID", CUST_ID);
@@ -208,7 +230,7 @@ public class UserController {
 			ti.setT_type("1");
 
 			Date date = new Date();
-			SimpleDateFormat formatrans = new SimpleDateFormat("y/M/d/H/m");
+			SimpleDateFormat formatrans = new SimpleDateFormat("yyyy/MM/dd/HH/mm");
 			String dateee = formatrans.format(date);
 			ti.setT_date(dateee);
 
@@ -220,7 +242,6 @@ public class UserController {
 
 			//사장에게 송금
 			Owner owner =  ownerservice.getOwner(OWNER_ID);
-			System.out.println(owner);
 			obj = new JSONObject();
 			obj.put("CUST_ID", OWNER_ID);
 			obj.put("TRAN_SEQ", getseq().substring(0,5)+"p");
@@ -245,38 +266,57 @@ public class UserController {
 
 				//방 사용
 				Room room = new Room();
-				room.setSr_u_id(user.getUid());
-				room.setSr_o_id(owner.getOid());
+				room.setSr_u_id(CUST_ID);
+				room.setSr_o_id(OWNER_ID);
 				room.setSr_song(Integer.parseInt(TRAN_AMT)/1000 * owner.getO_songByMoney());
-				room.setSr_date(dateee);
+				room.setSr_room(Integer.parseInt(ROOM_NUM));
+
+				if(TYPE.equals("0")){
+					room.setSr_date(dateee);
+				}
+				else if(TYPE.equals("1")){
+					room.setSr_date(ob.get("DATE").toString());
+				}
+
 				roomservice.writeroomDeatil(room);
-				
+				System.out.println("result : success");
+				System.out.println("==============================");
 				return new ResponseEntity<>("success", HttpStatus.OK);
 			}
 			else{
+				System.out.println("result : fail");
+				System.out.println("==============================");
 				return new ResponseEntity<>("fail", HttpStatus.OK);
 			}
 		}
 		else{
+			System.out.println("result : fail");
+			System.out.println("==============================");
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/user/updateAccount")
 	public ResponseEntity<Object> updateAccount(@RequestBody String json) throws UnsupportedEncodingException,ParseException {
+		System.out.println("url : http://115.85.180.70:3001/user/updateAccount");
+
 		org.json.simple.JSONObject ob = parser.parseurl(json);
+		System.out.println("param : " +ob.toString());
 		User user = new User();
 		user.setU_id(ob.get("u_id").toString());
 		user.setU_bank(ob.get("u_bank").toString());
 		user.setU_account(ob.get("u_account").toString());
-		user.setU_account(ob.get("u_name").toString());
+		user.setU_name(ob.get("u_name").toString());
 
 		int result = userservice.updateAccount(user);
-		System.out.println(user);
 		if(result > 0){
+			System.out.println("result : success");
+			System.out.println("==============================");
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}
 		else{
+			System.out.println("result : fail");
+			System.out.println("==============================");
 			return new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 

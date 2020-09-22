@@ -29,12 +29,18 @@ public class ProfitController {
     @PostMapping("/profit/getList")
     public ResponseEntity<Object> allowner(@RequestBody String json) throws UnsupportedEncodingException,ParseException{
         
+        System.out.println("url : http://115.85.180.70:3001/profit/getList");
+
+
+
         org.json.simple.JSONObject ob = parser.parseurl(json);
         String id = ob.get("CUST_ID").toString();
+        System.out.println("param : " +ob.toString());
         
         Owner owner = ownerservice.getOwner(id);
 
-    
+        System.out.println("result : success");
+        System.out.println("==============================");
         return new ResponseEntity<>(profitservice.getList(owner.getOid()), HttpStatus.OK);
 
     }
